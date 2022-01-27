@@ -20,21 +20,28 @@ class MainTabController: UITabBarController {
     }
     
     //MARK: - Helpers
-    //탭바 하위 뷰 컨트롤러 설정
+    // 탭바 하위 뷰 컨트롤러 설정
     func configureViewControllers() {
         
         let feed = FeedController()
-        feed.tabBarItem.image = UIImage(named: "home_unselected")
+        let nav1 = templateNavigationController(image: UIImage(named: "home_unselected"), rootViewController: feed)
         
         let explore = ExploreController()
-        explore.tabBarItem.image = UIImage(named: "search_unselected")
+        let nav2 = templateNavigationController(image:UIImage(named: "search_unselected"), rootViewController: explore)
         
         let notifications = NotificationController()
-        notifications.tabBarItem.image = UIImage(named: "like_unselected")
+        let nav3 = templateNavigationController(image: UIImage(named: "like_unselected"), rootViewController: notifications)
         
         let conversations = ConversationController()
-        conversations.tabBarItem.image = UIImage(named: "mail")
+        let nav4 = templateNavigationController(image: UIImage(named: "mail"), rootViewController: conversations)
         
-        viewControllers = [feed, explore, notifications, conversations]
+        viewControllers = [nav1, nav2, nav3, nav4]
+    }
+    // 내비게이션 컨트롤러 이미지, 색상 설정
+    func templateNavigationController(image: UIImage?, rootViewController: UIViewController) -> UINavigationController{
+        let nav = UINavigationController(rootViewController: rootViewController)
+        nav.tabBarItem.image = image
+        nav.navigationBar.barTintColor = .white
+        return nav
     }
 }
