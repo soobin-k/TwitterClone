@@ -11,15 +11,55 @@ class MainTabController: UITabBarController {
 
     //MARK: - Properties
     
+    // 플로팅 버튼
+    let actionButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.tintColor = .white
+        button.backgroundColor = .twitterBlue
+        button.setImage(UIImage(named: "new_tweet"), for: .normal)
+        button.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
     //MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureViewControllers()
+        configureUI()
+    }
+    
+    //MARK: - Selectors
+    
+    // 플로팅 버튼 클릭 함수
+    @objc func actionButtonTapped(){
+        print(123)
     }
     
     //MARK: - Helpers
+    
+    func configureUI(){
+        view.addSubview(actionButton)
+        // 플로팅 버튼 오토레이아웃 설정
+//        actionButton.translatesAutoresizingMaskIntoConstraints = false
+//        // 버튼 높이
+//        actionButton.heightAnchor.constraint(equalToConstant: 56).isActive = true
+//        // 버튼 너비
+//        actionButton.widthAnchor.constraint(equalToConstant: 56).isActive = true
+//        // 버튼 Y 좌표
+//        actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -64).isActive = true
+//        // 버튼 X 좌표
+//        actionButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16).isActive = true
+        
+        // extension 활용하여 오토레이아웃 설정
+        actionButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingBottom: 64, paddingRight: 16, width: 56, height: 56)
+        
+        // 원 모양
+        actionButton.layer.cornerRadius = 56 / 2
+        
+    }
+    
     // 탭바 하위 뷰 컨트롤러 설정
     func configureViewControllers() {
         
