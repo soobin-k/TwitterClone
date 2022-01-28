@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class RegistrationController: UIViewController{
     //MARK: - Properties
@@ -104,6 +105,60 @@ class RegistrationController: UIViewController{
     
     @objc func handleRegistration() {
         
+        guard let profileImage = profileImage else {
+            print("DEBUG: 프로필 사진을 등록해주세요.")
+            return
+        }
+        
+        guard let email = emailTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+        guard let fullname = fullnameTextField.text else { return }
+        guard let username = usernameTextField.text else { return }
+        
+        print("email: \(email)")
+        print("password: \(password)")
+        
+        // 이미지 압축
+        guard let imageData = profileImage.jpegData(compressionQuality: 0.3) else { return }
+        let metaData = StorageMetadata()
+        metaData.contentType = "image/jpeg"
+        let filename = NSUUID().uuidString
+        
+        // 스토리지 참조
+        let storageRef = STORAGE_PROFILE_IMAGES.child(filename)
+        
+        // 이미지를 파이어베이스 스토리지에 등록 -> 나중에 이미지 url을 DB에 저장해야함
+        storageRef.putData(imageData, metadata: metaData){ (metaData, error) in
+            storageRef.downloadURL { (url, error) in
+                guard let profileImageUrl = url?.absoluteString else { return }
+                if let error = error {
+                    // 이미지 등록 오류 메시지
+                    print("DEBUG: Error is \(error.localizedDescription)")
+                    return
+                }
+                
+                // 파이어베이스 사용자 등록
+                Auth.auth().createUser(withEmail: email, password: password){
+                    (result, error) in
+                    if let error = error {
+                        // 사용자 등록 오류 메시지
+                        print("DEBUG: Error is \(error.localizedDescription)")
+                        return
+                    }
+                    
+                    // 유저 식별자
+                    guard let uid = result?.user.uid else { return }
+                    
+                    // 값은 딕셔너리 타입으로 생성해야함.
+                    let values = ["email" : email, "username": username, "fulllname": fullname, "profileImageUrl": profileImageUrl]
+                    
+                    // 값 업데이트
+                    REF_USERS.child(uid).updateChildValues(values){ (error, ref) in
+                        print("DEBUG: 사용자 등록 성공")
+                    }
+                }
+            }
+        }
     }
     
     //MARK: - Helpers
@@ -118,7 +173,7 @@ class RegistrationController: UIViewController{
         plusPhotoButton.centerX(inView: view, topAnchor: view.safeAreaLayoutGuide.topAnchor)
         plusPhotoButton.setDimensions(width: 128, height: 128)
         
-        let stack = UIStackView(arrangedSubviews: [emailContainerView, passwordContainerView, fullnameContainerView, usernameContainerView])
+        let stack = UIStackView(arrangedSubviews: [emailContainerView, passwordContainerView, fullnameContainerView, usernameContainerView, registrationButton])
         stack.axis = .vertical
         stack.spacing = 20
         stack.distribution = .fillEqually
