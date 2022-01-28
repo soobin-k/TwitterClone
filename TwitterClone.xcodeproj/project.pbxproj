@@ -22,8 +22,9 @@
 		C330E7BD27A330960097B88D /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C330E7BC27A330960097B88D /* LoginController.swift */; };
 		C330E7BF27A330E40097B88D /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C330E7BE27A330E40097B88D /* RegistrationController.swift */; };
 		C3315E8727A4263B00BA49DB /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3315E8627A4263B00BA49DB /* Constants.swift */; };
+		C3469BB227A454F400EFE626 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3469BB127A454F400EFE626 /* AuthService.swift */; };
+		C3469BB427A45C7900EFE626 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C3469BB327A45C7900EFE626 /* GoogleService-Info.plist */; };
 		C3B851C627A3A5BB00C498A0 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B851C527A3A5BB00C498A0 /* Utilities.swift */; };
-		C3B851C827A3E72800C498A0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C3B851C727A3E72800C498A0 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,8 +46,9 @@
 		C330E7BC27A330960097B88D /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		C330E7BE27A330E40097B88D /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		C3315E8627A4263B00BA49DB /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		C3469BB127A454F400EFE626 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		C3469BB327A45C7900EFE626 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C3B851C527A3A5BB00C498A0 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
-		C3B851C727A3E72800C498A0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D6ECC67EF2B3957BC5F0DD03 /* Pods_TwitterClone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TwitterClone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -110,8 +112,8 @@
 				C330E79327A304C30097B88D /* SceneDelegate.swift */,
 				C330E79A27A304C40097B88D /* Assets.xcassets */,
 				C330E79C27A304C40097B88D /* LaunchScreen.storyboard */,
-				C3B851C727A3E72800C498A0 /* GoogleService-Info.plist */,
 				C330E79F27A304C40097B88D /* Info.plist */,
+				C3469BB327A45C7900EFE626 /* GoogleService-Info.plist */,
 				C330E7AF27A30A690097B88D /* Main.storyboard */,
 			);
 			path = TwitterClone;
@@ -154,6 +156,7 @@
 		C330E7A927A305D40097B88D /* API */ = {
 			isa = PBXGroup;
 			children = (
+				C3469BB127A454F400EFE626 /* AuthService.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -237,7 +240,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C330E7B027A30A690097B88D /* Main.storyboard in Resources */,
-				C3B851C827A3E72800C498A0 /* GoogleService-Info.plist in Resources */,
+				C3469BB427A45C7900EFE626 /* GoogleService-Info.plist in Resources */,
 				C330E79E27A304C40097B88D /* LaunchScreen.storyboard in Resources */,
 				C330E79B27A304C40097B88D /* Assets.xcassets in Resources */,
 			);
@@ -298,6 +301,7 @@
 				C330E79227A304C30097B88D /* AppDelegate.swift in Sources */,
 				C330E7B427A30ED80097B88D /* ExploreController.swift in Sources */,
 				C330E7BA27A3200B0097B88D /* Extensions.swift in Sources */,
+				C3469BB227A454F400EFE626 /* AuthService.swift in Sources */,
 				C330E79427A304C30097B88D /* SceneDelegate.swift in Sources */,
 				C330E7AE27A309510097B88D /* MainTabController.swift in Sources */,
 				C330E7B827A30EFD0097B88D /* ConversationController.swift in Sources */,

@@ -64,7 +64,6 @@ class RegistrationController: UIViewController{
     
     private let usernameTextField: UITextField = {
         let tf = Utilities().textField(withPlaceholder: "Username")
-        tf.isSecureTextEntry = true
         return tf
     }()
     
@@ -118,46 +117,11 @@ class RegistrationController: UIViewController{
         print("email: \(email)")
         print("password: \(password)")
         
-        // 이미지 압축
-        guard let imageData = profileImage.jpegData(compressionQuality: 0.3) else { return }
-        let metaData = StorageMetadata()
-        metaData.contentType = "image/jpeg"
-        let filename = NSUUID().uuidString
+        let credentials = AuthCredentials(email: email, password: password, fullname: fullname, username: username, profileImage: profileImage)
         
-        // 스토리지 참조
-        let storageRef = STORAGE_PROFILE_IMAGES.child(filename)
-        
-        // 이미지를 파이어베이스 스토리지에 등록 -> 나중에 이미지 url을 DB에 저장해야함
-        storageRef.putData(imageData, metadata: metaData){ (metaData, error) in
-            storageRef.downloadURL { (url, error) in
-                guard let profileImageUrl = url?.absoluteString else { return }
-                if let error = error {
-                    // 이미지 등록 오류 메시지
-                    print("DEBUG: Error is \(error.localizedDescription)")
-                    return
-                }
-                
-                // 파이어베이스 사용자 등록
-                Auth.auth().createUser(withEmail: email, password: password){
-                    (result, error) in
-                    if let error = error {
-                        // 사용자 등록 오류 메시지
-                        print("DEBUG: Error is \(error.localizedDescription)")
-                        return
-                    }
-                    
-                    // 유저 식별자
-                    guard let uid = result?.user.uid else { return }
-                    
-                    // 값은 딕셔너리 타입으로 생성해야함.
-                    let values = ["email" : email, "username": username, "fulllname": fullname, "profileImageUrl": profileImageUrl]
-                    
-                    // 값 업데이트
-                    REF_USERS.child(uid).updateChildValues(values){ (error, ref) in
-                        print("DEBUG: 사용자 등록 성공")
-                    }
-                }
-            }
+        AuthService.shared.registerUser(credentials: credentials){ (error, ref) in
+            // ✨ AuthService에서 프로세스 완료 여부를 전달받음
+            print("DEBUG: 회원가입 성공")
         }
     }
     
